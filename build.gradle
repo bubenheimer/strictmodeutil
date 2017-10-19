@@ -25,7 +25,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:3.0.0-rc1'
     }
 }
 
@@ -41,6 +41,5 @@ ext {
     minSdkVersion = 11
     compileSdkVersion = 25
     targetSdkVersion = compileSdkVersion
-    buildToolsVersion = '25.0.1'
     javaVersion = JavaVersion.VERSION_1_7
 }
