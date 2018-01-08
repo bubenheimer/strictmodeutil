@@ -6,7 +6,9 @@ package org.bubenheimer.android.os;
 
 import android.os.StrictMode;
 
-public final class StrictModeUtils {
+import org.bubenheimer.util.Uninstantiable;
+
+public final class StrictModeUtils extends Uninstantiable {
     public static void setInstanceLimit(final Class cls, final int limit) {
         final StrictMode.VmPolicy.Builder builder =
                 new StrictMode.VmPolicy.Builder(StrictMode.getVmPolicy());
@@ -15,9 +17,5 @@ public final class StrictModeUtils {
 
     public static void setSingletonLimit(final Class cls) {
         setInstanceLimit(cls, 1);
-    }
-
-    private StrictModeUtils() {
-        throw new UnsupportedOperationException();
     }
 }

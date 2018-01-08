@@ -17,3 +17,5 @@
 
 include ':strictmode-check'
 include ':strictmode-nocheck'
+include ':strictmodecore-debug'
+include ':strictmodecore-release'

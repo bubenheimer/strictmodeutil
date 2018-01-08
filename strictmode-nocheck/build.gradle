@@ -52,4 +52,8 @@ android {
     }
 }
 
+dependencies {
+    implementation 'org.bubenheimer:javautil:1.0-SNAPSHOT'
+}
+
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
