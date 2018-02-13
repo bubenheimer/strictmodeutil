@@ -36,6 +36,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionName version
     }
+
     buildTypes {
         debug {
         }
@@ -46,9 +47,15 @@ android {
             renderscriptDebuggable false
         }
     }
+
     compileOptions {
       sourceCompatibility rootProject.ext.javaVersion
       targetCompatibility rootProject.ext.javaVersion
+    }
+
+    // TODO change based on resolution of https://issuetracker.google.com/issues/72050365
+    libraryVariants.all {
+        it.generateBuildConfig.enabled = false
     }
 }
 
