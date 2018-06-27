@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Uli Bubenheimer.
+ * Copyright (c) 2015-2018 Uli Bubenheimer.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,53 +14,3 @@
  * limitations under the License.
  *
  */
-
-group = rootProject.GROUP
-version = rootProject.VERSION_NAME
-
-buildscript {
-    repositories {
-        maven {
-            url MAVEN_REPOSITORY_URL
-        }
-    }
-}
-
-apply plugin: 'com.android.library'
-
-android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-
-    defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionName version
-    }
-
-    buildTypes {
-        debug {
-        }
-        release {
-            shrinkResources false
-            debuggable false
-            jniDebuggable false
-            renderscriptDebuggable false
-        }
-    }
-
-    compileOptions {
-      sourceCompatibility rootProject.ext.javaVersion
-      targetCompatibility rootProject.ext.javaVersion
-    }
-
-    // TODO change based on resolution of https://issuetracker.google.com/issues/72050365
-    libraryVariants.all {
-        it.generateBuildConfig.enabled = false
-    }
-}
-
-dependencies {
-    implementation 'org.bubenheimer:javautil:1.0-SNAPSHOT'
-}
-
-apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

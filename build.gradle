@@ -15,31 +15,85 @@
  *
  */
 
-group = GROUP
-version = VERSION_NAME
-
 buildscript {
     repositories {
-        maven {
-            url MAVEN_REPOSITORY_URL
-        }
+        google()
+        jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.0-beta2'
+        classpath 'com.android.tools.build:gradle:3.2.0-beta01'
     }
 }
 
-subprojects {
-    repositories {
-        maven {
-            url MAVEN_REPOSITORY_URL
-        }
-    }
-}
+group = 'org.bubenheimer'
+version = '1.0-SNAPSHOT'
 
 ext {
     minSdkVersion = 14
-    compileSdkVersion = 27
-    targetSdkVersion = compileSdkVersion
+    compileSdkVersion = 28
+    targetSdkVersion = 28
     javaVersion = JavaVersion.VERSION_1_8
+}
+
+subprojects {
+    buildscript {
+        repositories {
+            google()
+        }
+    }
+
+    repositories {
+        mavenLocal()
+        google()
+        jcenter()
+    }
+
+    apply plugin: 'com.android.library'
+    apply plugin: 'maven-publish'
+
+    group = rootProject.group
+    version = rootProject.version
+
+    publishing {
+        publications {
+            library(MavenPublication) {
+                artifact bundleReleaseAar
+            }
+        }
+    }
+
+    android {
+        compileSdkVersion rootProject.ext.compileSdkVersion
+
+        defaultConfig {
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            versionName version
+        }
+
+        buildTypes {
+            debug {
+            }
+            release {
+                shrinkResources false
+                debuggable false
+                jniDebuggable false
+                renderscriptDebuggable false
+            }
+        }
+
+        compileOptions {
+            sourceCompatibility rootProject.ext.javaVersion
+            targetCompatibility rootProject.ext.javaVersion
+        }
+
+        // TODO change based on resolution of https://issuetracker.google.com/issues/72050365
+        libraryVariants.all {
+            it.generateBuildConfig.enabled = false
+        }
+    }
+
+    dependencies {
+        implementation 'org.bubenheimer:javautil:1.0-SNAPSHOT'
+    }
 }

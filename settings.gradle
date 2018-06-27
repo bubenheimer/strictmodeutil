@@ -15,7 +15,7 @@
  *
  */
 
-include ':strictmode-check'
-include ':strictmode-nocheck'
+include ':strictmodeutil-check'
+include ':strictmodeutil-nocheck'
 include ':strictmodecore-debug'
 include ':strictmodecore-release'
