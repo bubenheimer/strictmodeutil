@@ -19,10 +19,12 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven { url 'https://plugins.gradle.org/m2/' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0-alpha12'
+        classpath 'com.android.tools.build:gradle:3.3.0-alpha13'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+        classpath 'net.ltgt.gradle:gradle-errorprone-plugin:0.0.13'
     }
 }
 
@@ -51,6 +53,7 @@ subprojects {
 
     apply plugin: 'com.android.library'
     apply plugin: 'com.github.dcendents.android-maven'
+    apply plugin: 'net.ltgt.errorprone'
 
     group = rootProject.group
     version = rootProject.version
@@ -87,6 +90,8 @@ subprojects {
     }
 
     dependencies {
+        errorprone 'com.google.errorprone:error_prone_core:2.3.2'
+
         implementation 'org.bubenheimer:javautil:1.0-SNAPSHOT'
     }
 }
