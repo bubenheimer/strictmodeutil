@@ -18,7 +18,8 @@
 package org.bubenheimer.android.os;
 
 import org.bubenheimer.util.Uninstantiable;
-import org.bubenheimer.util.function.Supplier;
+
+import java.util.function.Supplier;
 
 public final class StrictModeCore extends Uninstantiable {
     public static void allowThreadDiskReads(final Runnable runnable) {

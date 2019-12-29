@@ -67,6 +67,7 @@ subprojects {
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
             versionName version
+            multiDexEnabled true
         }
 
         buildTypes {
@@ -81,6 +82,7 @@ subprojects {
         }
 
         compileOptions {
+            coreLibraryDesugaringEnabled true
             sourceCompatibility rootProject.ext.javaVersion
             targetCompatibility rootProject.ext.javaVersion
         }
@@ -97,5 +99,7 @@ subprojects {
         errorproneJavac 'com.google.errorprone:javac:9+181-r4173-1'
 
         implementation 'org.bubenheimer:javautil:1.0-SNAPSHOT'
+
+        coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.4'
     }
 }

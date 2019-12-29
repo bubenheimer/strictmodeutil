@@ -20,7 +20,8 @@ package org.bubenheimer.android.os;
 import android.os.StrictMode;
 
 import org.bubenheimer.util.Uninstantiable;
-import org.bubenheimer.util.function.Supplier;
+
+import java.util.function.Supplier;
 
 public final class StrictModeCore extends Uninstantiable {
     private static void allow(
