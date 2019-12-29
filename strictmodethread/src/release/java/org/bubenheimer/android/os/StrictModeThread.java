@@ -21,7 +21,7 @@ import org.bubenheimer.util.Uninstantiable;
 
 import java.util.function.Supplier;
 
-public final class StrictModeCore extends Uninstantiable {
+public final class StrictModeThread extends Uninstantiable {
     public static void allowThreadDiskReads(
             final Runnable runnable
     ) {
