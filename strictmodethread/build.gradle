@@ -15,5 +15,19 @@
  *
  */
 
-include ':strictmodethread'
-include ':strictmodevm'
+publishing {
+    publications {
+        debug(MavenPublication) {
+            afterEvaluate {
+                from components.debug
+            }
+            artifactId = project.name + '-debug'
+        }
+        release(MavenPublication) {
+            afterEvaluate {
+                from components.release
+            }
+            artifactId = project.name + '-release'
+        }
+    }
+}

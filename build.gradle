@@ -24,7 +24,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.0.0-alpha07'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath 'net.ltgt.gradle:gradle-errorprone-plugin:1.1.1'
     }
 }
@@ -54,7 +53,7 @@ subprojects {
     }
 
     apply plugin: 'com.android.library'
-    apply plugin: 'com.github.dcendents.android-maven'
+    apply plugin: 'maven-publish'
     apply plugin: 'net.ltgt.errorprone'
 
     group = rootProject.group
@@ -91,15 +90,15 @@ subprojects {
         buildFeatures {
             buildConfig false
         }
-    }
 
-    dependencies {
-        errorprone 'com.google.errorprone:error_prone_core:2.3.4'
-        //noinspection GradleDynamicVersion
-        errorproneJavac 'com.google.errorprone:javac:9+181-r4173-1'
+        dependencies {
+            errorprone 'com.google.errorprone:error_prone_core:2.3.4'
+            //noinspection GradleDynamicVersion
+            errorproneJavac 'com.google.errorprone:javac:9+181-r4173-1'
 
-        implementation 'org.bubenheimer:javautil:1.0-SNAPSHOT'
+            implementation 'org.bubenheimer:javautil:1.0-SNAPSHOT'
 
-        coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.4'
+            coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.4'
+        }
     }
 }

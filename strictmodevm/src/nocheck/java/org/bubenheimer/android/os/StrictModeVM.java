@@ -15,5 +15,19 @@
  *
  */
 
-include ':strictmodethread'
-include ':strictmodevm'
+package org.bubenheimer.android.os;
+
+import org.bubenheimer.util.Uninstantiable;
+
+public final class StrictModeVM extends Uninstantiable {
+    public static void setInstanceLimit(
+            final Class<?> cls,
+            final int limit
+    ) {
+    }
+
+    public static void setSingletonLimit(
+            final Class<?> cls
+    ) {
+    }
+}

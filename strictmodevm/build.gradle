@@ -15,5 +15,30 @@
  *
  */
 
-include ':strictmodethread'
-include ':strictmodevm'
+android {
+    flavorDimensions 'checking'
+
+    productFlavors {
+        check {
+        }
+        nocheck {
+        }
+    }
+}
+
+publishing {
+    publications {
+        checkRelease(MavenPublication) {
+            afterEvaluate {
+                from components.checkRelease
+            }
+            artifactId = project.name + '-check'
+        }
+        nocheckRelease(MavenPublication) {
+            afterEvaluate {
+                from components.nocheckRelease
+            }
+            artifactId = project.name + '-nocheck'
+        }
+    }
+}
