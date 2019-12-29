@@ -22,16 +22,33 @@ import org.bubenheimer.util.Uninstantiable;
 import java.util.function.Supplier;
 
 public final class StrictModeCore extends Uninstantiable {
-    public static void allowThreadDiskReads(final Runnable runnable) {
+    public static void allowThreadDiskReads(
+            final Runnable runnable
+    ) {
         runnable.run();
     }
-    public static void allowThreadDiskWrites(final Runnable runnable) {
+    public static void allowThreadDiskWrites(
+            final Runnable runnable
+    ) {
         runnable.run();
     }
-    public static <T> T allowThreadDiskReads(final Supplier<T> supplier) {
+    public static <T> T allowThreadDiskReads(
+            final Supplier<T> supplier
+    ) {
         return supplier.get();
     }
-    public static <T> T allowThreadDiskWrites(final Supplier<T> supplier) {
+    public static <T> T allowThreadDiskWrites(
+            final Supplier<T> supplier
+    ) {
+        return supplier.get();
+    }
+    public static void allowSlowCalls(
+            final Runnable runnable
+    ) {
+    }
+    public static <T> T allowSlowCalls(
+            final Supplier<T> supplier
+    ) {
         return supplier.get();
     }
 }
