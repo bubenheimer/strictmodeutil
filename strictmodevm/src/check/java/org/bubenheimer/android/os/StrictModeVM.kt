@@ -14,26 +14,12 @@
  * limitations under the License.
  *
  */
+package org.bubenheimer.android.os
 
-package org.bubenheimer.android.os;
+import android.os.StrictMode
+import android.os.StrictMode.VmPolicy
 
-import android.os.StrictMode;
-
-import org.bubenheimer.util.Uninstantiable;
-
-public final class StrictModeVM extends Uninstantiable {
-    public static void setInstanceLimit(
-            final Class<?> cls,
-            final int limit
-    ) {
-        final StrictMode.VmPolicy.Builder builder =
-                new StrictMode.VmPolicy.Builder(StrictMode.getVmPolicy());
-        StrictMode.setVmPolicy(builder.setClassInstanceLimit(cls, limit).build());
-    }
-
-    public static void setSingletonLimit(
-            final Class<?> cls
-    ) {
-        setInstanceLimit(cls, 1);
-    }
+fun Class<*>.instanceLimit(limit: Int) {
+    val builder = VmPolicy.Builder(StrictMode.getVmPolicy())
+    StrictMode.setVmPolicy(builder.setClassInstanceLimit(this, limit).build())
 }

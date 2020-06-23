@@ -14,41 +14,11 @@
  * limitations under the License.
  *
  */
+package org.bubenheimer.android.os
 
-package org.bubenheimer.android.os;
-
-import org.bubenheimer.util.Uninstantiable;
-
-import java.util.function.Supplier;
-
-public final class StrictModeThread extends Uninstantiable {
-    public static void allowThreadDiskReads(
-            final Runnable runnable
-    ) {
-        runnable.run();
-    }
-    public static void allowThreadDiskWrites(
-            final Runnable runnable
-    ) {
-        runnable.run();
-    }
-    public static <T> T allowThreadDiskReads(
-            final Supplier<T> supplier
-    ) {
-        return supplier.get();
-    }
-    public static <T> T allowThreadDiskWrites(
-            final Supplier<T> supplier
-    ) {
-        return supplier.get();
-    }
-    public static void allowSlowCalls(
-            final Runnable runnable
-    ) {
-    }
-    public static <T> T allowSlowCalls(
-            final Supplier<T> supplier
-    ) {
-        return supplier.get();
-    }
-}
+inline fun allowThreadDiskReads(runnable: () -> Unit) = runnable()
+inline fun allowThreadDiskWrites(runnable: () -> Unit) = runnable()
+inline fun <T> allowThreadDiskReads(supplier: () -> T): T = supplier()
+inline fun <T> allowThreadDiskWrites(supplier: () -> T): T = supplier()
+inline fun allowSlowCalls(runnable: () -> Unit) = runnable()
+inline fun <T> allowSlowCalls(supplier: () -> T): T = supplier()

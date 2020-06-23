@@ -14,82 +14,51 @@
  * limitations under the License.
  *
  */
+package org.bubenheimer.android.os
 
-package org.bubenheimer.android.os;
+import android.os.StrictMode
 
-import android.os.StrictMode;
+inline fun allowThreadDiskReads(runnable: () -> Unit) =
+        runnable.runWith(StrictMode::allowThreadDiskReads)
 
-import org.bubenheimer.util.Uninstantiable;
+inline fun allowThreadDiskWrites(runnable: () -> Unit) =
+        runnable.runWith(StrictMode::allowThreadDiskWrites)
 
-import java.util.function.Supplier;
+inline fun <T> allowThreadDiskReads(supplier: () -> T): T =
+        supplier.runWith(StrictMode::allowThreadDiskReads)
 
-public final class StrictModeThread extends Uninstantiable {
-    private static void allow(
-            final Runnable runnable,
-            final Supplier<StrictMode.ThreadPolicy> policyProcessor
-    ) {
-        final StrictMode.ThreadPolicy oldPolicy = policyProcessor.get();
-        try {
-            runnable.run();
-        } finally {
-            StrictMode.setThreadPolicy(oldPolicy);
-        }
+inline fun <T> allowThreadDiskWrites(supplier: () -> T): T =
+        supplier.runWith(StrictMode::allowThreadDiskWrites)
+
+inline fun allowSlowCalls(runnable: () -> Unit) = runnable.runWith() { allowSlowCalls() }
+
+inline fun <T> allowSlowCalls(supplier: () -> T): T = supplier.runWith() { allowSlowCalls() }
+
+@PublishedApi
+internal inline fun (() -> Unit).runWith(policyProcessor: () -> StrictMode.ThreadPolicy) {
+    val oldPolicy = policyProcessor()
+    try {
+        this()
+    } finally {
+        StrictMode.setThreadPolicy(oldPolicy)
     }
+}
 
-    private static <T> T allow(
-            final Supplier<T> supplier,
-            final Supplier<StrictMode.ThreadPolicy> policyProcessor
-    ) {
-        final StrictMode.ThreadPolicy oldPolicy = policyProcessor.get();
-        try {
-            return supplier.get();
-        } finally {
-            StrictMode.setThreadPolicy(oldPolicy);
-        }
+@PublishedApi
+internal inline fun <T> (() -> T).runWith(policyProcessor: () -> StrictMode.ThreadPolicy): T {
+    val oldPolicy = policyProcessor()
+    return try {
+        this()
+    } finally {
+        StrictMode.setThreadPolicy(oldPolicy)
     }
+}
 
-    public static void allowThreadDiskReads(
-            final Runnable runnable
-    ) {
-        allow(runnable, StrictMode::allowThreadDiskReads);
-    }
-
-    public static void allowThreadDiskWrites(
-            final Runnable runnable
-    ) {
-        allow(runnable, StrictMode::allowThreadDiskWrites);
-    }
-
-    public static <T> T allowThreadDiskReads(
-            final Supplier<T> supplier
-    ) {
-        return allow(supplier, StrictMode::allowThreadDiskReads);
-    }
-
-    public static <T> T allowThreadDiskWrites(
-            final Supplier<T> supplier
-    ) {
-        return allow(supplier, StrictMode::allowThreadDiskWrites);
-    }
-
-    public static void allowSlowCalls(
-            final Runnable runnable
-    ) {
-        allow(runnable, StrictModeThread::allowSlowCalls);
-    }
-
-    public static <T> T allowSlowCalls(
-            final Supplier<T> supplier
-    ) {
-        return allow(supplier, StrictModeThread::allowSlowCalls);
-    }
-
-    private static StrictMode.ThreadPolicy allowSlowCalls() {
-        final StrictMode.ThreadPolicy oldPolicy = StrictMode.getThreadPolicy();
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder(oldPolicy)
-                .permitCustomSlowCalls()
-                .build()
-        );
-        return oldPolicy;
-    }
+@PublishedApi
+internal fun allowSlowCalls(): StrictMode.ThreadPolicy {
+    return StrictMode.getThreadPolicy().also { StrictMode.setThreadPolicy(
+            StrictMode.ThreadPolicy.Builder(it)
+                    .permitCustomSlowCalls()
+                    .build()
+    )}
 }
