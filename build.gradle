@@ -25,8 +25,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0-beta01'
-        classpath 'net.ltgt.gradle:gradle-errorprone-plugin:1.1.1'
+        classpath 'com.android.tools.build:gradle:4.1.0-beta02'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -38,7 +37,6 @@ ext {
     minSdkVersion = 14
     compileSdkVersion = 30
     targetSdkVersion = 30
-    javaVersion = JavaVersion.VERSION_1_8
 }
 
 subprojects {
@@ -58,7 +56,6 @@ subprojects {
     apply plugin: 'com.android.library'
     apply plugin: 'maven-publish'
     apply plugin: 'kotlin-android'
-    apply plugin: 'net.ltgt.errorprone'
 
     group = rootProject.group
     version = rootProject.version
@@ -88,13 +85,9 @@ subprojects {
         }
 
         dependencies {
-            errorprone 'com.google.errorprone:error_prone_core:2.3.4'
-            //noinspection GradleDynamicVersion
-            errorproneJavac 'com.google.errorprone:javac:9+181-r4173-1'
-
             implementation 'org.bubenheimer:javautil:1.0-SNAPSHOT'
 
-            implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+            implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
         }
     }
 }
