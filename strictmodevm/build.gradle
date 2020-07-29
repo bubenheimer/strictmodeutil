@@ -24,6 +24,22 @@ android {
         nocheck {
         }
     }
+
+    task checkDebugSourceJar(type: Jar) {
+        sourceSets {
+            from check.java.srcDirs, debug.java.srcDirs, main.java.srcDirs
+        }
+        //noinspection GroovyAccessibility
+        archiveClassifier = "sources"
+    }
+
+    task nocheckDebugSourceJar(type: Jar) {
+        sourceSets {
+            from nocheck.java.srcDirs, debug.java.srcDirs, main.java.srcDirs
+        }
+        //noinspection GroovyAccessibility
+        archiveClassifier = "sources"
+    }
 }
 
 publishing {
@@ -31,29 +47,33 @@ publishing {
         checkDebug(MavenPublication) {
             afterEvaluate {
                 from components.checkDebug
+                artifactId = "$project.name-check-debug"
+
+                artifact(checkDebugSourceJar)
             }
-            artifactId = "$project.name-check-debug"
         }
 
         nocheckDebug(MavenPublication) {
             afterEvaluate {
                 from components.nocheckDebug
+                artifactId = "$project.name-nocheck-debug"
+
+                artifact(nocheckDebugSourceJar)
             }
-            artifactId = "$project.name-nocheck-debug"
         }
 
         checkRelease(MavenPublication) {
             afterEvaluate {
                 from components.checkRelease
+                artifactId = "$project.name-check-release"
             }
-            artifactId = "$project.name-check-release"
         }
 
         nocheckRelease(MavenPublication) {
             afterEvaluate {
                 from components.nocheckRelease
+                artifactId = "$project.name-nocheck-release"
             }
-            artifactId = "$project.name-nocheck-release"
         }
     }
 }
