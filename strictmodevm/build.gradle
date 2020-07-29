@@ -28,17 +28,32 @@ android {
 
 publishing {
     publications {
+        checkDebug(MavenPublication) {
+            afterEvaluate {
+                from components.checkDebug
+            }
+            artifactId = "$project.name-check-debug"
+        }
+
+        nocheckDebug(MavenPublication) {
+            afterEvaluate {
+                from components.nocheckDebug
+            }
+            artifactId = "$project.name-nocheck-debug"
+        }
+
         checkRelease(MavenPublication) {
             afterEvaluate {
                 from components.checkRelease
             }
-            artifactId = project.name + '-check'
+            artifactId = "$project.name-check-release"
         }
+
         nocheckRelease(MavenPublication) {
             afterEvaluate {
                 from components.nocheckRelease
             }
-            artifactId = project.name + '-nocheck'
+            artifactId = "$project.name-nocheck-release"
         }
     }
 }

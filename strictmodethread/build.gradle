@@ -21,13 +21,14 @@ publishing {
             afterEvaluate {
                 from components.debug
             }
-            artifactId = project.name + '-debug'
+            artifactId = "$project.name-debug"
         }
+
         release(MavenPublication) {
             afterEvaluate {
                 from components.release
             }
-            artifactId = project.name + '-release'
+            artifactId = "$project.name-release"
         }
     }
 }
