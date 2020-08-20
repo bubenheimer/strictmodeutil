@@ -18,21 +18,21 @@ package org.bubenheimer.android.os
 
 import android.os.StrictMode
 
-inline fun allowThreadDiskReads(runnable: () -> Unit) =
-        runnable.runWith(StrictMode::allowThreadDiskReads)
+public inline fun allowThreadDiskReads(runnable: () -> Unit): Unit =
+    runnable.runWith(StrictMode::allowThreadDiskReads)
 
-inline fun allowThreadDiskWrites(runnable: () -> Unit) =
-        runnable.runWith(StrictMode::allowThreadDiskWrites)
+public inline fun allowThreadDiskWrites(runnable: () -> Unit): Unit =
+    runnable.runWith(StrictMode::allowThreadDiskWrites)
 
-inline fun <T> allowThreadDiskReads(supplier: () -> T): T =
-        supplier.runWith(StrictMode::allowThreadDiskReads)
+public inline fun <T> allowThreadDiskReads(supplier: () -> T): T =
+    supplier.runWith(StrictMode::allowThreadDiskReads)
 
-inline fun <T> allowThreadDiskWrites(supplier: () -> T): T =
-        supplier.runWith(StrictMode::allowThreadDiskWrites)
+public inline fun <T> allowThreadDiskWrites(supplier: () -> T): T =
+    supplier.runWith(StrictMode::allowThreadDiskWrites)
 
-inline fun allowSlowCalls(runnable: () -> Unit) = runnable.runWith() { allowSlowCalls() }
+public inline fun allowSlowCalls(runnable: () -> Unit): Unit = runnable.runWith() { allowSlowCalls() }
 
-inline fun <T> allowSlowCalls(supplier: () -> T): T = supplier.runWith() { allowSlowCalls() }
+public inline fun <T> allowSlowCalls(supplier: () -> T): T = supplier.runWith() { allowSlowCalls() }
 
 @PublishedApi
 internal inline fun (() -> Unit).runWith(policyProcessor: () -> StrictMode.ThreadPolicy) {
@@ -56,9 +56,11 @@ internal inline fun <T> (() -> T).runWith(policyProcessor: () -> StrictMode.Thre
 
 @PublishedApi
 internal fun allowSlowCalls(): StrictMode.ThreadPolicy {
-    return StrictMode.getThreadPolicy().also { StrictMode.setThreadPolicy(
+    return StrictMode.getThreadPolicy().also {
+        StrictMode.setThreadPolicy(
             StrictMode.ThreadPolicy.Builder(it)
-                    .permitCustomSlowCalls()
-                    .build()
-    )}
+                .permitCustomSlowCalls()
+                .build()
+        )
+    }
 }

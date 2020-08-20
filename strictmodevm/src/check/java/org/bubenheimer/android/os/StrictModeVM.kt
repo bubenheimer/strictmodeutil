@@ -19,7 +19,7 @@ package org.bubenheimer.android.os
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 
-fun Class<*>.instanceLimit(limit: Int) {
+public fun Class<*>.instanceLimit(limit: Int) {
     val builder = VmPolicy.Builder(StrictMode.getVmPolicy())
     StrictMode.setVmPolicy(builder.setClassInstanceLimit(this, limit).build())
 }

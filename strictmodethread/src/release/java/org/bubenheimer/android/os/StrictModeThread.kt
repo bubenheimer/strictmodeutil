@@ -16,9 +16,9 @@
  */
 package org.bubenheimer.android.os
 
-inline fun allowThreadDiskReads(runnable: () -> Unit) = runnable()
-inline fun allowThreadDiskWrites(runnable: () -> Unit) = runnable()
-inline fun <T> allowThreadDiskReads(supplier: () -> T): T = supplier()
-inline fun <T> allowThreadDiskWrites(supplier: () -> T): T = supplier()
-inline fun allowSlowCalls(runnable: () -> Unit) = runnable()
-inline fun <T> allowSlowCalls(supplier: () -> T): T = supplier()
+public inline fun allowThreadDiskReads(runnable: () -> Unit): Unit = runnable()
+public inline fun allowThreadDiskWrites(runnable: () -> Unit): Unit = runnable()
+public inline fun <T> allowThreadDiskReads(supplier: () -> T): T = supplier()
+public inline fun <T> allowThreadDiskWrites(supplier: () -> T): T = supplier()
+public inline fun allowSlowCalls(runnable: () -> Unit): Unit = runnable()
+public inline fun <T> allowSlowCalls(supplier: () -> T): T = supplier()

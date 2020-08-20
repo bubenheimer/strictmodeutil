@@ -16,4 +16,4 @@
  */
 package org.bubenheimer.android.os
 
-fun Class<*>.instanceLimit(@Suppress("UNUSED_PARAMETER") limit: Int) {}
+public fun Class<*>.instanceLimit(@Suppress("UNUSED_PARAMETER") limit: Int) {}
