@@ -30,9 +30,9 @@ public inline fun <T> allowThreadDiskReads(supplier: () -> T): T =
 public inline fun <T> allowThreadDiskWrites(supplier: () -> T): T =
     supplier.runWith(StrictMode::allowThreadDiskWrites)
 
-public inline fun allowSlowCalls(runnable: () -> Unit): Unit = runnable.runWith() { allowSlowCalls() }
+public inline fun allowSlowCalls(runnable: () -> Unit): Unit = runnable.runWith { allowSlowCalls() }
 
-public inline fun <T> allowSlowCalls(supplier: () -> T): T = supplier.runWith() { allowSlowCalls() }
+public inline fun <T> allowSlowCalls(supplier: () -> T): T = supplier.runWith { allowSlowCalls() }
 
 @PublishedApi
 internal inline fun (() -> Unit).runWith(policyProcessor: () -> StrictMode.ThreadPolicy) {
