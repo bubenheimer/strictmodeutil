@@ -17,25 +17,60 @@
 package org.bubenheimer.android.os
 
 import android.os.StrictMode
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
-public inline fun allowThreadDiskReads(runnable: () -> Unit): Unit =
+@ExperimentalContracts
+public inline fun allowThreadDiskReads(runnable: () -> Unit) {
+    contract { callsInPlace(runnable, InvocationKind.EXACTLY_ONCE) }
+
     runnable.runWith(StrictMode::allowThreadDiskReads)
+}
 
-public inline fun allowThreadDiskWrites(runnable: () -> Unit): Unit =
+@ExperimentalContracts
+public inline fun allowThreadDiskWrites(runnable: () -> Unit) {
+    contract { callsInPlace(runnable, InvocationKind.EXACTLY_ONCE) }
+
     runnable.runWith(StrictMode::allowThreadDiskWrites)
+}
 
-public inline fun <T> allowThreadDiskReads(supplier: () -> T): T =
-    supplier.runWith(StrictMode::allowThreadDiskReads)
+@ExperimentalContracts
+public inline fun <T> allowThreadDiskReads(supplier: () -> T): T {
+    contract { callsInPlace(supplier, InvocationKind.EXACTLY_ONCE) }
 
-public inline fun <T> allowThreadDiskWrites(supplier: () -> T): T =
-    supplier.runWith(StrictMode::allowThreadDiskWrites)
+    return supplier.runWith(StrictMode::allowThreadDiskReads)
+}
 
-public inline fun allowSlowCalls(runnable: () -> Unit): Unit = runnable.runWith { allowSlowCalls() }
+@ExperimentalContracts
+public inline fun <T> allowThreadDiskWrites(supplier: () -> T): T {
+    contract { callsInPlace(supplier, InvocationKind.EXACTLY_ONCE) }
 
-public inline fun <T> allowSlowCalls(supplier: () -> T): T = supplier.runWith { allowSlowCalls() }
+    return supplier.runWith(StrictMode::allowThreadDiskWrites)
+}
 
+@ExperimentalContracts
+public inline fun allowSlowCalls(runnable: () -> Unit) {
+    contract { callsInPlace(runnable, InvocationKind.EXACTLY_ONCE) }
+
+    runnable.runWith { allowSlowCalls() }
+}
+
+@ExperimentalContracts
+public inline fun <T> allowSlowCalls(supplier: () -> T): T {
+    contract { callsInPlace(supplier, InvocationKind.EXACTLY_ONCE) }
+
+    return supplier.runWith { allowSlowCalls() }
+}
+
+@ExperimentalContracts
 @PublishedApi
 internal inline fun (() -> Unit).runWith(policyProcessor: () -> StrictMode.ThreadPolicy) {
+    contract {
+        callsInPlace(this@runWith, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(policyProcessor, InvocationKind.EXACTLY_ONCE)
+    }
+
     val oldPolicy = policyProcessor()
     try {
         this()
@@ -44,8 +79,14 @@ internal inline fun (() -> Unit).runWith(policyProcessor: () -> StrictMode.Threa
     }
 }
 
+@ExperimentalContracts
 @PublishedApi
 internal inline fun <T> (() -> T).runWith(policyProcessor: () -> StrictMode.ThreadPolicy): T {
+    contract {
+        callsInPlace(this@runWith, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(policyProcessor, InvocationKind.EXACTLY_ONCE)
+    }
+
     val oldPolicy = policyProcessor()
     return try {
         this()

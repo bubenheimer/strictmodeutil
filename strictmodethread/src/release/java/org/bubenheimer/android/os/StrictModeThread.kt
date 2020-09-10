@@ -16,9 +16,48 @@
  */
 package org.bubenheimer.android.os
 
-public inline fun allowThreadDiskReads(runnable: () -> Unit): Unit = runnable()
-public inline fun allowThreadDiskWrites(runnable: () -> Unit): Unit = runnable()
-public inline fun <T> allowThreadDiskReads(supplier: () -> T): T = supplier()
-public inline fun <T> allowThreadDiskWrites(supplier: () -> T): T = supplier()
-public inline fun allowSlowCalls(runnable: () -> Unit): Unit = runnable()
-public inline fun <T> allowSlowCalls(supplier: () -> T): T = supplier()
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
+
+@ExperimentalContracts
+public inline fun allowThreadDiskReads(runnable: () -> Unit) {
+    contract { callsInPlace(runnable, InvocationKind.EXACTLY_ONCE) }
+
+    runnable()
+}
+
+@ExperimentalContracts
+public inline fun allowThreadDiskWrites(runnable: () -> Unit) {
+    contract { callsInPlace(runnable, InvocationKind.EXACTLY_ONCE) }
+
+    runnable()
+}
+
+@ExperimentalContracts
+public inline fun <T> allowThreadDiskReads(supplier: () -> T): T {
+    contract { callsInPlace(supplier, InvocationKind.EXACTLY_ONCE) }
+
+    return supplier()
+}
+
+@ExperimentalContracts
+public inline fun <T> allowThreadDiskWrites(supplier: () -> T): T {
+    contract { callsInPlace(supplier, InvocationKind.EXACTLY_ONCE) }
+
+    return supplier()
+}
+
+@ExperimentalContracts
+public inline fun allowSlowCalls(runnable: () -> Unit) {
+    contract { callsInPlace(runnable, InvocationKind.EXACTLY_ONCE) }
+
+    runnable()
+}
+
+@ExperimentalContracts
+public inline fun <T> allowSlowCalls(supplier: () -> T): T {
+    contract { callsInPlace(supplier, InvocationKind.EXACTLY_ONCE) }
+
+    return supplier()
+}
