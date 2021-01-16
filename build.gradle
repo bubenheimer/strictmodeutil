@@ -16,7 +16,7 @@
  */
 
 buildscript {
-    ext.kotlin_version = '1.4.20'
+    ext.kotlin_version = '1.4.21'
 
     repositories {
         mavenLocal()
@@ -37,6 +37,7 @@ ext {
     minSdkVersion = 14
     compileSdkVersion = 30
     targetSdkVersion = 30
+    javaVersion = "1.8"
 }
 
 subprojects {
@@ -80,8 +81,13 @@ subprojects {
             }
         }
 
+        compileOptions {
+            sourceCompatibility javaVersion
+            targetCompatibility javaVersion
+        }
+
         kotlinOptions {
-            jvmTarget = "1.8"
+            jvmTarget = javaVersion
             freeCompilerArgs = [
                     "-progressive",
                     "-Xexplicit-api=strict",
@@ -91,10 +97,6 @@ subprojects {
 
         buildFeatures {
             buildConfig false
-        }
-
-        dependencies {
-            implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
         }
     }
 }
