@@ -88,6 +88,7 @@ subprojects {
 
         kotlinOptions {
             jvmTarget = javaVersion
+            useIR = true
             freeCompilerArgs = [
                     "-progressive",
                     "-Xexplicit-api=strict",
