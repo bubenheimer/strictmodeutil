@@ -37,7 +37,7 @@ ext {
     minSdkVersion = 19
     compileSdkVersion = 30
     targetSdkVersion = 30
-    javaVersion = "1.8"
+    javaVersion = "11"
 }
 
 subprojects {
