@@ -16,6 +16,8 @@
  */
 
 android {
+    namespace "org.bubenheimer.android.strictmodethread"
+
     task debugSourceJar(type: Jar) {
         sourceSets {
             from debug.java.srcDirs, main.java.srcDirs

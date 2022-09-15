@@ -16,6 +16,8 @@
  */
 
 android {
+    namespace "org.bubenheimer.android.strictmodevm"
+
     flavorDimensions 'checking'
 
     productFlavors {
