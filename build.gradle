@@ -34,7 +34,7 @@ group = 'org.bubenheimer'
 version = '1.0-SNAPSHOT'
 
 ext {
-    minSdkVersion = 21
+    minSdkVersion = 24
     compileSdkVersion = 33
     targetSdkVersion = 33
     javaVersion = "11"
