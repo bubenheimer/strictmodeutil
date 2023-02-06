@@ -21,43 +21,22 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @ExperimentalContracts
-public inline fun allowThreadDiskReads(runnable: () -> Unit) {
-    contract { callsInPlace(runnable, InvocationKind.EXACTLY_ONCE) }
+public inline fun <T> allowThreadDiskReads(block: () -> T): T {
+    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
 
-    runnable()
+    return block()
 }
 
 @ExperimentalContracts
-public inline fun allowThreadDiskWrites(runnable: () -> Unit) {
-    contract { callsInPlace(runnable, InvocationKind.EXACTLY_ONCE) }
+public inline fun <T> allowThreadDiskWrites(block: () -> T): T {
+    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
 
-    runnable()
+    return block()
 }
 
 @ExperimentalContracts
-public inline fun <T> allowThreadDiskReads(supplier: () -> T): T {
-    contract { callsInPlace(supplier, InvocationKind.EXACTLY_ONCE) }
+public inline fun <T> allowSlowCalls(block: () -> T): T {
+    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
 
-    return supplier()
-}
-
-@ExperimentalContracts
-public inline fun <T> allowThreadDiskWrites(supplier: () -> T): T {
-    contract { callsInPlace(supplier, InvocationKind.EXACTLY_ONCE) }
-
-    return supplier()
-}
-
-@ExperimentalContracts
-public inline fun allowSlowCalls(runnable: () -> Unit) {
-    contract { callsInPlace(runnable, InvocationKind.EXACTLY_ONCE) }
-
-    runnable()
-}
-
-@ExperimentalContracts
-public inline fun <T> allowSlowCalls(supplier: () -> T): T {
-    contract { callsInPlace(supplier, InvocationKind.EXACTLY_ONCE) }
-
-    return supplier()
+    return block()
 }
