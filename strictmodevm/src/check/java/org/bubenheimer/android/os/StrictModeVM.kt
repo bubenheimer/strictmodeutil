@@ -16,11 +16,52 @@
  */
 package org.bubenheimer.android.os
 
+import android.os.Build.VERSION_CODES.P
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
+import androidx.annotation.RequiresApi
+import org.bubenheimer.android.sdkAtLeast
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 public fun Class<*>.instanceLimit(limit: Int): Unit = StrictMode.setVmPolicy(
     VmPolicy.Builder(StrictMode.getVmPolicy())
         .setClassInstanceLimit(this, limit)
         .build()
 )
+
+@OptIn(ExperimentalContracts::class)
+public inline fun <T> allowNonSdkApiUse(block: () -> T): T {
+    contract { callsInPlace(block, InvocationKind.AT_MOST_ONCE) }
+
+    return if (sdkAtLeast(P)) {
+        runWith(block) { allowNonSdkApiUse() }
+    } else block()
+}
+
+@OptIn(ExperimentalContracts::class)
+@PublishedApi
+internal inline fun <T> runWith(block: () -> T, policyProcessor: () -> VmPolicy): T {
+    contract {
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(policyProcessor, InvocationKind.EXACTLY_ONCE)
+    }
+
+    val oldPolicy: VmPolicy = policyProcessor()
+    return try {
+        block()
+    } finally {
+        StrictMode.setVmPolicy(oldPolicy)
+    }
+}
+
+@PublishedApi
+@RequiresApi(P)
+internal fun allowNonSdkApiUse(): VmPolicy = StrictMode.getVmPolicy().also {
+    StrictMode.setVmPolicy(
+        VmPolicy.Builder(it)
+            .permitNonSdkApiUsage()
+            .build()
+    )
+}

@@ -24,6 +24,7 @@ buildscript {
         gradlePluginPortal()
         mavenCentral()
     }
+
     dependencies {
         classpath 'com.android.tools.build:gradle:7.4.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -62,7 +63,7 @@ subprojects {
     version = rootProject.version
 
     android {
-        compileSdkVersion rootProject.ext.compileSdkVersion
+        compileSdk rootProject.ext.compileSdkVersion
 
         defaultConfig {
             minSdkVersion rootProject.ext.minSdkVersion
@@ -99,7 +100,14 @@ subprojects {
             buildConfig false
         }
 
-        lintOptions {
+        publishing {
+            multipleVariants {
+                allVariants()
+                withSourcesJar()
+            }
+        }
+
+        lint {
             quiet false
             abortOnError false
             checkReleaseBuilds true
@@ -122,6 +130,16 @@ subprojects {
             ignoreTestSources false
             checkGeneratedSources false
             checkDependencies false
+        }
+    }
+
+    publishing {
+        publications {
+            library(MavenPublication) {
+                afterEvaluate {
+                    from components.default
+                }
+            }
         }
     }
 }

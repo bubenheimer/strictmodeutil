@@ -16,4 +16,16 @@
  */
 package org.bubenheimer.android.os
 
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
+
+@Suppress("UnusedReceiverParameter")
 public fun Class<*>.instanceLimit(@Suppress("UNUSED_PARAMETER") limit: Int) {}
+
+@ExperimentalContracts
+public inline fun <T> allowNonSdkApiUse(block: () -> T): T {
+    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
+
+    return block()
+}

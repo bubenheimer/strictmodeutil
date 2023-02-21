@@ -26,56 +26,10 @@ android {
         nocheck {
         }
     }
-
-    task checkDebugSourceJar(type: Jar) {
-        sourceSets {
-            from check.java.srcDirs, debug.java.srcDirs, main.java.srcDirs
-        }
-        //noinspection GroovyAccessibility
-        archiveClassifier = "sources"
-    }
-
-    task nocheckDebugSourceJar(type: Jar) {
-        sourceSets {
-            from nocheck.java.srcDirs, debug.java.srcDirs, main.java.srcDirs
-        }
-        //noinspection GroovyAccessibility
-        archiveClassifier = "sources"
-    }
 }
 
-publishing {
-    publications {
-        checkDebug(MavenPublication) {
-            afterEvaluate {
-                from components.checkDebug
-                artifactId = "$project.name-check-debug"
+dependencies {
+    implementation('org.bubenheimer:androidutil:1.0-SNAPSHOT')
 
-                artifact(checkDebugSourceJar)
-            }
-        }
-
-        nocheckDebug(MavenPublication) {
-            afterEvaluate {
-                from components.nocheckDebug
-                artifactId = "$project.name-nocheck-debug"
-
-                artifact(nocheckDebugSourceJar)
-            }
-        }
-
-        checkRelease(MavenPublication) {
-            afterEvaluate {
-                from components.checkRelease
-                artifactId = "$project.name-check-release"
-            }
-        }
-
-        nocheckRelease(MavenPublication) {
-            afterEvaluate {
-                from components.nocheckRelease
-                artifactId = "$project.name-nocheck-release"
-            }
-        }
-    }
+    implementation('androidx.annotation:annotation:1.5.0')
 }
