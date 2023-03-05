@@ -21,7 +21,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @Suppress("UnusedReceiverParameter")
-public fun Class<*>.instanceLimit(@Suppress("UNUSED_PARAMETER") limit: Int) {}
+public fun Class<*>.instanceLimit(@Suppress("UNUSED_PARAMETER") limit: Int = 1) {}
 
 @ExperimentalContracts
 public inline fun <T> allowNonSdkApiUse(block: () -> T): T {

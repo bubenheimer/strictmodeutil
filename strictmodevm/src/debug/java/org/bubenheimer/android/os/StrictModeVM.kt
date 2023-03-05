@@ -25,7 +25,7 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-public fun Class<*>.instanceLimit(limit: Int): Unit = StrictMode.setVmPolicy(
+public fun Class<*>.instanceLimit(limit: Int = 1): Unit = StrictMode.setVmPolicy(
     VmPolicy.Builder(StrictMode.getVmPolicy())
         .setClassInstanceLimit(this, limit)
         .build()
