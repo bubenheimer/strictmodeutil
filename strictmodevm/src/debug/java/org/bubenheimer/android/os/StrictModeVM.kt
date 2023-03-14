@@ -41,6 +41,13 @@ public inline fun <T> allowNonSdkApiUse(block: () -> T): T {
 }
 
 @OptIn(ExperimentalContracts::class)
+public inline fun <T> allowAllVmPolicyViolations(block: () -> T): T {
+    contract { callsInPlace(block, InvocationKind.AT_MOST_ONCE) }
+
+    return runWith(block, VmPolicy::LAX)
+}
+
+@OptIn(ExperimentalContracts::class)
 @PublishedApi
 internal inline fun <T> runWith(block: () -> T, policyProcessor: () -> VmPolicy): T {
     contract {

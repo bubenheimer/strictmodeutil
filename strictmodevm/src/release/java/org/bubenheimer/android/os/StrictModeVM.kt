@@ -29,3 +29,10 @@ public inline fun <T> allowNonSdkApiUse(block: () -> T): T {
 
     return block()
 }
+
+@OptIn(ExperimentalContracts::class)
+public inline fun <T> allowAllVmPolicyViolations(block: () -> T): T {
+    contract { callsInPlace(block, InvocationKind.AT_MOST_ONCE) }
+
+    return block()
+}
