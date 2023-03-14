@@ -20,21 +20,21 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-@ExperimentalContracts
+@OptIn(ExperimentalContracts::class)
 public inline fun <T> allowThreadDiskReads(block: () -> T): T {
     contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
 
     return block()
 }
 
-@ExperimentalContracts
+@OptIn(ExperimentalContracts::class)
 public inline fun <T> allowThreadDiskWrites(block: () -> T): T {
     contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
 
     return block()
 }
 
-@ExperimentalContracts
+@OptIn(ExperimentalContracts::class)
 public inline fun <T> allowSlowCalls(block: () -> T): T {
     contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
 

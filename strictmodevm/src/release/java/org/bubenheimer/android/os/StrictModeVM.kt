@@ -23,7 +23,7 @@ import kotlin.contracts.contract
 @Suppress("UnusedReceiverParameter")
 public fun Class<*>.instanceLimit(@Suppress("UNUSED_PARAMETER") limit: Int = 1) {}
 
-@ExperimentalContracts
+@OptIn(ExperimentalContracts::class)
 public inline fun <T> allowNonSdkApiUse(block: () -> T): T {
     contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
 
