@@ -1,5 +1,5 @@
-# Strict Mode Util
-#### Strict Mode Utilities
+# StrictMode Util
+#### StrictMode Utilities
 
 
 License
