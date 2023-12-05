@@ -17,16 +17,17 @@
 package org.bubenheimer.android.os
 
 import android.os.Build.VERSION_CODES.P
-import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
+import android.os.StrictMode.getVmPolicy
+import android.os.StrictMode.setVmPolicy
 import androidx.annotation.RequiresApi
 import org.bubenheimer.android.sdkAtLeast
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-public fun Class<*>.instanceLimit(limit: Int = 1): Unit = StrictMode.setVmPolicy(
-    VmPolicy.Builder(StrictMode.getVmPolicy())
+public fun Class<*>.instanceLimit(limit: Int = 1): Unit = setVmPolicy(
+    VmPolicy.Builder(getVmPolicy())
         .setClassInstanceLimit(this, limit)
         .build()
 )
@@ -36,7 +37,7 @@ public inline fun <T> allowNonSdkApiUse(block: () -> T): T {
     contract { callsInPlace(block, InvocationKind.AT_MOST_ONCE) }
 
     return if (sdkAtLeast(P)) {
-        runWith(block) { allowNonSdkApiUse() }
+        runWith(block, ::allowNonSdkApiUse)
     } else block()
 }
 
@@ -44,7 +45,7 @@ public inline fun <T> allowNonSdkApiUse(block: () -> T): T {
 public inline fun <T> allowAllVmPolicyViolations(block: () -> T): T {
     contract { callsInPlace(block, InvocationKind.AT_MOST_ONCE) }
 
-    return runWith(block, VmPolicy::LAX)
+    return runWith(block, ::allowLaxVmPolicy)
 }
 
 @OptIn(ExperimentalContracts::class)
@@ -59,16 +60,18 @@ internal inline fun <T> runWith(block: () -> T, policyProcessor: () -> VmPolicy)
     return try {
         block()
     } finally {
-        StrictMode.setVmPolicy(oldPolicy)
+        setVmPolicy(oldPolicy)
     }
 }
 
 @PublishedApi
 @RequiresApi(P)
-internal fun allowNonSdkApiUse(): VmPolicy = StrictMode.getVmPolicy().also {
-    StrictMode.setVmPolicy(
+internal fun allowNonSdkApiUse(): VmPolicy = getVmPolicy().also {
+    setVmPolicy(
         VmPolicy.Builder(it)
             .permitNonSdkApiUsage()
             .build()
     )
 }
+
+public fun allowLaxVmPolicy(): VmPolicy = getVmPolicy().also { setVmPolicy(VmPolicy.LAX) }

@@ -44,6 +44,13 @@ public inline fun <T> allowSlowCalls(block: () -> T): T {
 }
 
 @OptIn(ExperimentalContracts::class)
+public inline fun <T> allowAllThreadPolicyViolations(block: () -> T): T {
+    contract { callsInPlace(block, InvocationKind.AT_MOST_ONCE) }
+
+    return runWith(block, ::allowLaxThreadPolicy)
+}
+
+@OptIn(ExperimentalContracts::class)
 @PublishedApi
 internal inline fun <T> runWith(block: () -> T, policyProcessor: () -> ThreadPolicy): T {
     contract {
@@ -67,3 +74,6 @@ internal fun allowSlowCalls(): ThreadPolicy = StrictMode.getThreadPolicy().also 
             .build()
     )
 }
+
+public fun allowLaxThreadPolicy(): ThreadPolicy =
+    StrictMode.getThreadPolicy().also { StrictMode.setThreadPolicy(ThreadPolicy.LAX) }
