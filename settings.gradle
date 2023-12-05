@@ -33,7 +33,7 @@ dependencyResolutionManagement {
 
     versionCatalogs {
         libs {
-            version('android-plugin', '8.1.2')
+            version('android-plugin', '8.2.0')
 
             version('android-sdk-compile', '34')
             version('android-sdk-min', '26')
@@ -43,7 +43,7 @@ dependencyResolutionManagement {
 
             version('java', JavaVersion.VERSION_11.toString())
 
-            version('kotlin', '1.9.10')
+            version('kotlin', '1.9.21')
 
             plugin('android-library', 'com.android.library')
                     .versionRef('android-plugin')
