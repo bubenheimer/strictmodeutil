@@ -19,6 +19,7 @@ package org.bubenheimer.android.os
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import android.os.StrictMode.ThreadPolicy
 
 @OptIn(ExperimentalContracts::class)
 public inline fun <T> allowThreadDiskReads(block: () -> T): T {
@@ -40,3 +41,12 @@ public inline fun <T> allowSlowCalls(block: () -> T): T {
 
     return block()
 }
+
+@OptIn(ExperimentalContracts::class)
+public inline fun <T> allowAllThreadPolicyViolations(block: () -> T): T {
+    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
+
+    return block()
+}
+
+public fun allowLaxThreadPolicy(): Nothing = error("")

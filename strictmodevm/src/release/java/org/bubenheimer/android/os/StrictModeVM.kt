@@ -16,6 +16,7 @@
  */
 package org.bubenheimer.android.os
 
+import android.os.StrictMode.VmPolicy
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -32,7 +33,9 @@ public inline fun <T> allowNonSdkApiUse(block: () -> T): T {
 
 @OptIn(ExperimentalContracts::class)
 public inline fun <T> allowAllVmPolicyViolations(block: () -> T): T {
-    contract { callsInPlace(block, InvocationKind.AT_MOST_ONCE) }
+    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
 
     return block()
 }
+
+public fun allowLaxVmPolicy(): Nothing = error("")

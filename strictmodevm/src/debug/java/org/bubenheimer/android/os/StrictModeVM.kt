@@ -43,7 +43,7 @@ public inline fun <T> allowNonSdkApiUse(block: () -> T): T {
 
 @OptIn(ExperimentalContracts::class)
 public inline fun <T> allowAllVmPolicyViolations(block: () -> T): T {
-    contract { callsInPlace(block, InvocationKind.AT_MOST_ONCE) }
+    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
 
     return runWith(block, ::allowLaxVmPolicy)
 }

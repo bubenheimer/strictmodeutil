@@ -45,7 +45,7 @@ public inline fun <T> allowSlowCalls(block: () -> T): T {
 
 @OptIn(ExperimentalContracts::class)
 public inline fun <T> allowAllThreadPolicyViolations(block: () -> T): T {
-    contract { callsInPlace(block, InvocationKind.AT_MOST_ONCE) }
+    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
 
     return runWith(block, ::allowLaxThreadPolicy)
 }
