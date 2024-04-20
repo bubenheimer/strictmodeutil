@@ -30,35 +30,6 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
-
-    versionCatalogs {
-        libs {
-            version('android-plugin', '8.2.0')
-
-            version('android-sdk-compile', '34')
-            version('android-sdk-min', '26')
-            version('android-sdk-target', '34')
-
-            version('androidx-annotation', '1.7.0')
-
-            version('java', JavaVersion.VERSION_11.toString())
-
-            version('kotlin', '1.9.21')
-
-            plugin('android-library', 'com.android.library')
-                    .versionRef('android-plugin')
-
-            plugin('kotlin-android', 'org.jetbrains.kotlin.android')
-                    .versionRef('kotlin')
-
-
-            library('androidx-annotation', 'androidx.annotation', 'annotation')
-                    .versionRef('androidx-annotation')
-
-            library('bubenheimer-androidutil', 'org.bubenheimer', 'androidutil')
-                    .version('1.0-SNAPSHOT')
-        }
-    }
 }
 
 include ':strictmodethread'
