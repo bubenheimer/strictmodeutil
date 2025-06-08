@@ -33,7 +33,6 @@ android {
             shrinkResources false
             debuggable false
             jniDebuggable false
-            renderscriptDebuggable false
         }
     }
 
