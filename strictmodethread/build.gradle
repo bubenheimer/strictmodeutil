@@ -20,5 +20,5 @@ plugins {
 }
 
 android {
-    namespace "org.bubenheimer.android.strictmodethread"
+    namespace = "org.bubenheimer.android.strictmodethread"
 }

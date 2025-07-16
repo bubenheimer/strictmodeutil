@@ -20,7 +20,7 @@ plugins {
 }
 
 android {
-    namespace "org.bubenheimer.android.strictmodevm"
+    namespace = "org.bubenheimer.android.strictmodevm"
 }
 
 dependencies {
