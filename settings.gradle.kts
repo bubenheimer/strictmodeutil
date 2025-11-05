@@ -15,6 +15,22 @@
  *
  */
 
-plugins {
-    id "groovy-gradle-plugin"
+pluginManagement {
+    repositories {
+        mavenLocal()
+        google()
+        gradlePluginPortal()
+        mavenCentral()
+    }
 }
+
+dependencyResolutionManagement {
+    repositories {
+        mavenLocal()
+        google()
+        mavenCentral()
+    }
+}
+
+include(":strictmodethread")
+include(":strictmodevm")

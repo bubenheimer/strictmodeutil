@@ -15,7 +15,22 @@
  *
  */
 
-plugins {
-    alias(libs.plugins.android.library) apply(false)
-    alias(libs.plugins.kotlin.android) apply(false)
+pluginManagement {
+    repositories {
+        google()
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    versionCatalogs {
+        create("libs") {
+            from(files("../gradle/libs.versions.toml"))
+        }
+    }
 }

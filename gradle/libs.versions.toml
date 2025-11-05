@@ -17,13 +17,10 @@ kotlin = '2.2.21'
 
 [libraries]
 
+android-library = { module = 'com.android.library:com.android.library.gradle.plugin', version.ref = 'android-plugin' }
+
 androidx-annotation = { module = 'androidx.annotation:annotation', version.ref = 'androidx-annotation' }
 
 bubenheimer-androidutil = { module = 'org.bubenheimer:androidutil', version = '1.0-SNAPSHOT' }
 
-
-[plugins]
-
-android-library = { id = 'com.android.library', version.ref = 'android-plugin' }
-
-kotlin-android = { id = 'org.jetbrains.kotlin.android', version.ref = 'kotlin' }
+kotlin-gradle-plugin = { module = 'org.jetbrains.kotlin:kotlin-gradle-plugin', version.ref = 'kotlin' }

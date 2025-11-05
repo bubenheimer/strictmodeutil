@@ -15,22 +15,11 @@
  *
  */
 
-pluginManagement {
-    repositories {
-        mavenLocal()
-        google()
-        gradlePluginPortal()
-        mavenCentral()
-    }
+plugins {
+    `kotlin-dsl`
 }
 
-dependencyResolutionManagement {
-    repositories {
-        mavenLocal()
-        google()
-        mavenCentral()
-    }
+dependencies {
+    implementation(libs.android.library)
+    implementation(libs.kotlin.gradle.plugin)
 }
-
-include ':strictmodethread'
-include ':strictmodevm'

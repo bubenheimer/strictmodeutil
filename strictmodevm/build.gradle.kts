@@ -16,9 +16,15 @@
  */
 
 plugins {
-    id('android-lib-conventions')
+    id("android-lib-conventions")
 }
 
 android {
-    namespace = "org.bubenheimer.android.strictmodethread"
+    namespace = "org.bubenheimer.android.strictmodevm"
+}
+
+dependencies {
+    implementation(libs.bubenheimer.androidutil)
+
+    implementation(libs.androidx.annotation)
 }
