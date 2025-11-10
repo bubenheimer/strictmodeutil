@@ -19,9 +19,7 @@ plugins {
     id("android-lib-conventions")
 }
 
-android {
-    namespace = "org.bubenheimer.android.strictmodevm"
-}
+android.namespace = "org.bubenheimer.android.strictmodevm"
 
 dependencies {
     implementation(libs.bubenheimer.androidutil)

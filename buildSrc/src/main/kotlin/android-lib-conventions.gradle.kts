@@ -8,7 +8,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget.Companion.fromTarget
 plugins {
     id("com.android.library")
     kotlin("android")
-    id("maven-publish")
+    `maven-publish`
 }
 
 group = "org.bubenheimer"
@@ -28,11 +28,6 @@ kotlin {
         verbose = false
         extraWarnings = true
         freeCompilerArgs.add("-Xconsistent-data-class-copy-visibility")
-
-        // DelicateCoroutinesApi is counterproductive
-        optIn.add("kotlinx.coroutines.DelicateCoroutinesApi")
-        // Also counterproductive:
-        optIn.add("kotlinx.coroutines.ObsoleteCoroutinesApi")
     }
 }
 
@@ -50,8 +45,6 @@ android {
         }
         getByName("release") {
             isShrinkResources = false
-            //TODO
-//            isDebuggable = false
             isJniDebuggable = false
         }
     }

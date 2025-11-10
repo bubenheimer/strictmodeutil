@@ -19,6 +19,4 @@ plugins {
     id("android-lib-conventions")
 }
 
-android {
-    namespace = "org.bubenheimer.android.strictmodethread"
-}
+android.namespace = "org.bubenheimer.android.strictmodethread"
