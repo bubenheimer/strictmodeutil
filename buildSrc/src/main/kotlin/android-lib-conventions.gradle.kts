@@ -7,7 +7,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget.Companion.fromTarget
 
 plugins {
     id("com.android.library")
-    kotlin("android")
     `maven-publish`
 }
 
